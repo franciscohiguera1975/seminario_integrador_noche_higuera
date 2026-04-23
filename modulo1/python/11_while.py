@@ -1,0 +1,24 @@
+print("Ciclo While")
+contador=1
+while contador<=5:
+    print(contador)
+    contador+=1
+
+dato=""
+while dato!="salir":
+    dato = input("Escribe algo (salir para terminar)")
+    print("escribiste: ", dato)
+
+
+cantidad=int(input("Cuantos productos compró"))
+total=0
+contador=1
+while contador<=cantidad:
+    precio = float(input(f"Precio del preducto {contador}"))
+    total+=precio
+    contador+=1
+print("total ", total )
+if total >= 100:
+    print("aplica descuento")
+else:
+    print("no aplica descuento")
