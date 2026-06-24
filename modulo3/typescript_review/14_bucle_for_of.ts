@@ -31,3 +31,32 @@ const alumnos: any[] = [
 for (const alumno of alumnos) {
   console.log(`Alumno ${alumno.nombre}, edad: ${alumno.edad}, semestre: ${alumno.semestre}`);
 }
+
+interface Item {
+  nombre: string;
+  precio: number;
+  cantidad: number;
+}
+
+const carrito: Item[] = [
+  { nombre: "Mouse",   precio: 25, cantidad: 2 },
+  { nombre: "Teclado", precio: 80, cantidad: 1 },
+  { nombre: "Monitor", precio: 200, cantidad: 3 },
+];
+
+let totalCarrito = 0;
+for (const item of carrito) {
+  const subtotal = item.precio * item.cantidad;
+  console.log(`${item.nombre}: $${subtotal}`);
+  totalCarrito += subtotal;
+}
+console.log(`TOTAL: $${totalCarrito}`);  // TOTAL: $730
+
+const temps = [18, 22, 25, 30, 19, 27];
+let max = 0;
+for (const temp of temps) {
+  if (temp>max){
+    max=temp
+  }
+}
+console.log(max);
