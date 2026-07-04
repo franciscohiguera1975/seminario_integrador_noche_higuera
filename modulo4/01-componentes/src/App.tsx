@@ -1,7 +1,16 @@
 // src/App.tsx
 
+import FruitList from './components/FruitList'
 import UserGreeting from './components/UserGreeting'
 import WelcomeBanner       from './components/WelcomeBanner'
+import DocumentTitle from './useEffect/DocumentTitle'
+import FetchUser from './useEffect/FetchUser'
+import FetchUsers from './useEffect/FetchUsers'
+import AutoFocusForm from './useRef/AutoFocusForm'
+import InlineEditor from './useRef/InlineEditor'
+import DigitalCounter from './useState/DigitalCounter'
+import TaskManager from './useState/TaskManager'
+import UserProfileForm from './useState/UserProfileForm'
 
 
 // ┌──────────────────────────────────────────────────────────────────────────┐
@@ -20,7 +29,7 @@ import WelcomeBanner       from './components/WelcomeBanner'
 // │  12  ProductCatalogList  — lista con renderizado condicional de items   │
 // │  13  UserProfileCard     — ejercicio: props complejas + rol             │
 // └──────────────────────────────────────────────────────────────────────────┘
-const PASO = 2
+const PASO = 41
 
 const fruits = [
   { name: 'Manzana', emoji: '🍎', calories: 52 },
@@ -106,6 +115,17 @@ export default function App() {
         bio="Desarrolladora fullstack con 5 años de experiencia."
       />
     ) :*/
+     // Hooks: useState
+     PASO === 20 ?  <DigitalCounter initialValue={5} label="Cantidad de Servidores" step={3} /> :
+     PASO === 21 ? <UserProfileForm /> :
+     PASO === 22 ? <TaskManager /> :
+     // Hooks: useEffect
+     PASO === 30 ? <DocumentTitle /> :
+     PASO === 31 ? <FetchUser /> :
+     PASO === 32 ? <FetchUsers /> :
+     // Hooks: useRef
+     PASO === 40 ? <AutoFocusForm /> :
+     PASO === 41 ? <InlineEditor /> :
     <p style={{ color: '#e00' }}>Paso {PASO}: crea el componente primero</p>
 
   return (
