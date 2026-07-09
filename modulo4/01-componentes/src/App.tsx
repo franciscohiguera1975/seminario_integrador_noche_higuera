@@ -3,9 +3,21 @@
 import FruitList from './components/FruitList'
 import UserGreeting from './components/UserGreeting'
 import WelcomeBanner       from './components/WelcomeBanner'
+import { useAuth } from './contexts/AuthContext'
+import ThemeSelector from './customHooks/ThemeSelector'
+import MemoizedList from './useCallback/MemoizedList'
+import SearchWithFetch from './useCallback/SearchWithFetch'
+import AppHeader from './useContext/AppHeader'
+import LoginForm from './useContext/LoginForm'
+import ThemeToggle from './useContext/ThemeToggle'
+import UserBadge from './useContext/UserBadge'
 import DocumentTitle from './useEffect/DocumentTitle'
 import FetchUser from './useEffect/FetchUser'
 import FetchUsers from './useEffect/FetchUsers'
+import FilteredCatalog from './useMemo/FilteredCatalog'
+import PrimeSieve from './useMemo/PrimeSieve'
+import BasicCounter from './useReducer/BasicCounter'
+import RegistrationForm from './useReducer/RegistrationForm'
 import AutoFocusForm from './useRef/AutoFocusForm'
 import InlineEditor from './useRef/InlineEditor'
 import DigitalCounter from './useState/DigitalCounter'
@@ -29,7 +41,7 @@ import UserProfileForm from './useState/UserProfileForm'
 // │  12  ProductCatalogList  — lista con renderizado condicional de items   │
 // │  13  UserProfileCard     — ejercicio: props complejas + rol             │
 // └──────────────────────────────────────────────────────────────────────────┘
-const PASO = 41
+const PASO = 90
 
 const fruits = [
   { name: 'Manzana', emoji: '🍎', calories: 52 },
@@ -45,6 +57,8 @@ const catalog = [
 ]
 
 export default function App() {
+  const { state } = useAuth()
+  
   const content =
     PASO ===  1 ? <WelcomeBanner /> :
     PASO ===  2 ? <>
@@ -126,11 +140,36 @@ export default function App() {
      // Hooks: useRef
      PASO === 40 ? <AutoFocusForm /> :
      PASO === 41 ? <InlineEditor /> :
+     // Hooks: useReducer
+     PASO === 50 ? <BasicCounter /> :
+     PASO === 51 ? <RegistrationForm /> :
+     // Hooks: useContext
+     PASO === 60 ? <ThemeToggle /> :
+     PASO === 61 ? <UserBadge /> :
+     PASO === 62 ? <LoginForm /> :
+     // Hooks: useMemo
+     PASO === 70 ? <PrimeSieve /> :
+     PASO === 71 ? <FilteredCatalog /> :
+     // Hooks: useCallback
+     PASO === 80 ? <MemoizedList /> :
+     PASO === 81 ? <SearchWithFetch /> :
+     // Hooks: customs hooks
+      PASO === 90 ? <ThemeSelector/> :
+
     <p style={{ color: '#e00' }}>Paso {PASO}: crea el componente primero</p>
 
   return (
-    <main style={{ maxWidth: 540, margin: '40px auto', fontFamily: 'sans-serif', padding: '0 16px' }}>
-      {content}
+    <main style={{ maxWidth: 600, margin: '40px auto', fontFamily: 'sans-serif', padding: '0 16px' }}>
+      {PASO === 63 ? content : (
+        <>
+          {state.user && (
+            <p style={{ marginBottom: 16, fontSize: 14, color: '#6b7280' }}>
+              Sesión activa: <strong>{state.user.name}</strong>
+            </p>
+          )}
+          {content}
+        </>
+      )}
     </main>
   )
 }
