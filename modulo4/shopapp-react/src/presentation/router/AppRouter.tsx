@@ -11,6 +11,9 @@ import CartPage from '../pages/cart/CartPage'
 import CheckoutPage from '../pages/orders/CheckoutPage'
 import OrdersPage from '../pages/orders/OrdersPage'
 import OrderDetailPage from '../pages/orders/OrderDetailPage'
+import ProfilePage from '../pages/profile/ProfilePage'
+import AdminDashboardPage from '../pages/admin/AdminDashboardPage'
+import AdminCategoriesPage from '../pages/admin/AdminCategoriesPage'
 
 // ─── Lazy imports ─────────────────────────────────────────────────────────────
 
@@ -95,7 +98,7 @@ export default function AppRouter() {
               path="/profile"
               element={
                 <ProtectedRoute>
-                  <PlaceholderPage title="Perfil — Módulo 8" />
+                   <ProfilePage />
                 </ProtectedRoute>
               }
             />
@@ -105,7 +108,7 @@ export default function AppRouter() {
               path="/admin"
               element={
                 <ProtectedRoute requireStaff>
-                  <PlaceholderPage title="Admin Dashboard — Módulo 9" />
+                  <AdminDashboardPage />
                 </ProtectedRoute>
               }
             />
@@ -113,7 +116,7 @@ export default function AppRouter() {
               path="/admin/categories"
               element={
                 <ProtectedRoute requireStaff>
-                  <PlaceholderPage title="Admin Categorías — Módulo 10" />
+                  <AdminCategoriesPage />
                 </ProtectedRoute>
               }
             />
