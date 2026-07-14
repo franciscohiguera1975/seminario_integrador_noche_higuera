@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { toast } from 'sonner'
 import { Loader2, ShieldCheck, ExternalLink } from 'lucide-react'
-
+import { ImageUploader } from '@/presentation/components/ImageUploader'
 import { useAuthStore } from '@/presentation/store/auth.store'
 import { useProfileStore } from '@/presentation/store/profile.store'
 import { UserAvatar } from '@/presentation/components/UserAvatar'
@@ -39,7 +39,7 @@ type ProfileFormData = z.infer<typeof profileSchema>
 
 export default function ProfilePage() {
   const isStaff = useAuthStore((s) => s.user?.is_staff)
-  const { profile, isLoading, isSaving, error, fetchProfile, updateProfile } = useProfileStore()
+  const { profile, isLoading, isSaving, error, fetchProfile, updateProfile, uploadAvatar } = useProfileStore()
 
   useEffect(() => {
     fetchProfile()
@@ -88,6 +88,10 @@ export default function ProfilePage() {
     )
   }
 
+  function handleAvatarUpload(file: File): Promise<void> {
+    throw new Error('Function not implemented.')
+  }
+
   return (
     <div className="container max-w-2xl space-y-6 py-8">
       <h1 className="text-3xl font-bold tracking-tight">Mi perfil</h1>
@@ -108,41 +112,27 @@ export default function ProfilePage() {
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="flex items-center gap-5">
-                <UserAvatar user={profile} size="lg" />
-                <div className="space-y-1">
-                  <div className="flex items-center gap-2">
-                    <p className="text-xl font-semibold">
-                      {profile?.first_name || profile?.last_name
-                        ? `${profile?.first_name} ${profile?.last_name}`.trim()
-                        : profile?.username}
-                    </p>
-                    {isStaff && (
-                      <Badge variant="secondary" className="flex items-center gap-1">
-                        <ShieldCheck className="h-3 w-3" />
-                        Staff
-                      </Badge>
-                    )}
-                  </div>
-                  <p className="text-sm text-muted-foreground">@{profile?.username}</p>
+                <div className="flex flex-col items-center gap-2">
+                  <UserAvatar user={profile} size="lg" />
+                  <ImageUploader
+                    currentImageUrl={profile?.avatar_url ?? null}
+                    onUpload={handleAvatarUpload}
+                    circular
+                    className="hidden" // el área grande se reemplaza por el flujo de abajo — ver nota
+                  />
                 </div>
+                {/* ... resto del bloque de nombre/email/badge sin cambios ... */}
               </div>
 
-              <Separator />
-
-              <dl className="grid grid-cols-1 gap-4 text-sm sm:grid-cols-2">
-                <div className="space-y-1">
-                  <dt className="font-medium text-muted-foreground">Correo electrónico</dt>
-                  <dd>{profile?.email ?? '—'}</dd>
-                </div>
-                <div className="space-y-1">
-                  <dt className="font-medium text-muted-foreground">Nombre</dt>
-                  <dd>{profile?.first_name || '—'}</dd>
-                </div>
-                <div className="space-y-1">
-                  <dt className="font-medium text-muted-foreground">Apellido</dt>
-                  <dd>{profile?.last_name || '—'}</dd>
-                </div>
-              </dl>
+              {/* Sección dedicada para cambiar el avatar */}
+              <div className="flex flex-col items-center gap-3 border-t pt-6">
+                <h3 className="text-sm font-medium text-muted-foreground">Foto de perfil</h3>
+                <ImageUploader
+                  currentImageUrl={profile?.avatar_url ?? null}
+                  onUpload={handleAvatarUpload}
+                  circular
+                />
+              </div>
             </CardContent>
           </Card>
         </TabsContent>

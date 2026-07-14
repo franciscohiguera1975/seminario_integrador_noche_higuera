@@ -8,7 +8,7 @@ export interface ProductRepository {
   getProducts(filters?: Partial<ProductFilters>, page?: number): Promise<PaginatedResult<Product>>
   getProduct(id: number): Promise<Product>
   getStats(): Promise<ProductStats>
-
+  uploadImage(id: number, file: File): Promise<Product>
   // ── Añadido en el módulo 11 ─────────────────────────────────────────────
   createProduct(payload: {
     name: string

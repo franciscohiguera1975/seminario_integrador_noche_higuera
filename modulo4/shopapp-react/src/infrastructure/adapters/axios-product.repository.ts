@@ -11,7 +11,7 @@ type CreateProductPayload = Parameters<ProductRepository['createProduct']>[0]
 
 export class AxiosProductRepository implements ProductRepository {
 
-  
+
   async getProducts(
     filters?: Partial<ProductFilters>,
     page = 1,
@@ -89,6 +89,17 @@ export class AxiosProductRepository implements ProductRepository {
   async getStats(): Promise<ProductStats> {
     try {
       const { data } = await apiClient.get<ProductStats>('/products/stats/')
+      return data
+    } catch (err) {
+      throw parseApiError(err)
+    }
+  }
+  async uploadImage(id: number, file: File): Promise<Product> {
+    const formData = new FormData()
+    formData.append('image', file)
+
+    try {
+      const { data } = await apiClient.patch<Product>(`/products/${id}/`, formData)
       return data
     } catch (err) {
       throw parseApiError(err)

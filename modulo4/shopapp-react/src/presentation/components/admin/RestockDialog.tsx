@@ -22,7 +22,7 @@ import type { Product } from '@/domain/entities/product.entity'
 
 const restockSchema = z.object({
   quantity: z.coerce
-    .number({ invalid_type_error: 'Ingresa una cantidad válida' })
+    .number({ message: 'Ingresa una cantidad válida' })
     .int('La cantidad debe ser un número entero')
     .positive('La cantidad debe ser mayor a 0'),
 })
@@ -45,7 +45,7 @@ export function RestockDialog({ open, onOpenChange, product }: RestockDialogProp
     reset,
     formState: { errors },
   } = useForm<RestockFormValues>({
-    resolver: zodResolver(restockSchema),
+    resolver: zodResolver(restockSchema as never),
     defaultValues: { quantity: 1 },
   })
 

@@ -23,12 +23,12 @@ import type { Category } from '@/domain/entities/category.entity'
 const productSchema = z.object({
   name: z.string().min(2, 'Mínimo 2 caracteres').max(200, 'Máximo 200 caracteres'),
   description: z.string().max(1000, 'Máximo 1000 caracteres').optional().or(z.literal('')),
-  price: z.coerce.number({ error: 'Ingresa un precio válido' }).positive('El precio debe ser mayor a 0'),
+  price: z.coerce.number({ message: 'Ingresa un precio válido' }).positive('El precio debe ser mayor a 0'),
   stock: z.coerce
-    .number({ error: 'Ingresa un stock válido' })
+    .number({ message: 'Ingresa un stock válido' })
     .int('El stock debe ser un número entero')
     .min(0, 'El stock no puede ser negativo'),
-  category_id: z.coerce.number({ error: 'Selecciona una categoría' }).positive('Selecciona una categoría'),
+  category_id: z.coerce.number({ message: 'Selecciona una categoría' }).positive('Selecciona una categoría'),
   is_active: z.boolean(),
 })
 
@@ -52,7 +52,7 @@ export function ProductForm({ defaultValues, onSubmit, isLoading = false, catego
     control,
     formState: { errors },
   } = useForm<ProductFormValues>({
-    resolver: zodResolver(productSchema),
+    resolver: zodResolver(productSchema as never),
     defaultValues: {
       name: defaultValues?.name ?? '',
       description: defaultValues?.description ?? '',
